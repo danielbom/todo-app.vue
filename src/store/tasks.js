@@ -35,10 +35,10 @@ const actions = {
       .ref(BASE_REF)
       .once("value")
       .then(snapshot => {
-        commit(
-          "setTasks",
-          (snapshot.val() || []).filter(e => !!e)
-        );
+        const tasks = (snapshot.val() || []).filter(e => !!e);
+
+        commit("setTasks", tasks);
+        commit("setFiltered", tasks);
       });
   },
 

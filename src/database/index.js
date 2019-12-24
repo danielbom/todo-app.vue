@@ -1,2 +1,2 @@
-// export { database } from "./fakedb";
-export { database } from "./firebase";
+export { database } from "./fakedb";
+// export { database } from "./firebase";

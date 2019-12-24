@@ -16,8 +16,8 @@ const DATA = {
       },
       importance: "high",
       status: "todo",
-      createdAt: new Date(2019, 12, 10),
-      time: new Date(2019, 12, 12)
+      createdAt: new Date(2019, 12, 10).getTime(),
+      time: new Date(2019, 12, 12).getTime()
     },
     {
       id: 2,
@@ -31,9 +31,10 @@ const DATA = {
         id: 2,
         name: "Two"
       },
+      importance: "low",
       status: "doing",
-      createdAt: new Date(2019, 12, 10),
-      time: new Date(2019, 12, 12)
+      createdAt: new Date(2019, 12, 10).getTime(),
+      time: new Date(2019, 12, 12).getTime()
     },
     {
       id: 3,
@@ -47,9 +48,10 @@ const DATA = {
         id: 2,
         name: "Two"
       },
+      importance: "critical",
       status: "done",
-      createdAt: new Date(2019, 12, 10),
-      time: new Date(2019, 12, 12)
+      createdAt: new Date(2019, 12, 10).getTime(),
+      time: new Date(2019, 12, 12).getTime()
     }
   ],
   clients: [
@@ -79,28 +81,26 @@ const DATA = {
     }
   ],
   colaborators: [
-    [
-      {
-        id: 1,
-        name: "One",
-        status: "active"
-      },
-      {
-        id: 2,
-        name: "Two",
-        status: "active"
-      },
-      {
-        id: 3,
-        name: "Three",
-        status: "active"
-      },
-      {
-        id: 4,
-        name: "Four",
-        status: "inactive"
-      }
-    ]
+    {
+      id: 1,
+      name: "One",
+      status: "active"
+    },
+    {
+      id: 2,
+      name: "Two",
+      status: "active"
+    },
+    {
+      id: 3,
+      name: "Three",
+      status: "active"
+    },
+    {
+      id: 4,
+      name: "Four",
+      status: "inactive"
+    }
   ]
 };
 
@@ -111,6 +111,9 @@ const fakedb = {
     console.log("Val", this.table);
     return DATA[this.table];
   },
+  then(callback) {
+    callback(this);
+  },
 
   // EventEmitter interface
   off() {
@@ -120,8 +123,7 @@ const fakedb = {
     callback(this);
     return this;
   },
-  once(_event, callback) {
-    callback(this);
+  once(_event) {
     return this;
   },
 

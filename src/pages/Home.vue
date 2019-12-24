@@ -2,7 +2,7 @@
   <div class="row">
     <!-- First col: Filters -->
     <div class="col-lg-3 col-md-6 col-sm-12 p-1 pt-2">
-      <CreateTask :clients="clients" :colaborators="colaborators"></CreateTask>
+      <CreateTask></CreateTask>
       <!-- Card filters -->
       <FilterTask></FilterTask>
     </div>
@@ -29,9 +29,9 @@
       </div>
       <!-- Overdue tasks -->
       <CardTask
-        v-for="task in overdueTasks"
+        v-for="(task, index) in overdueTasks"
         :task="task"
-        :key="task['.key']"
+        :key="`overdueTasks-${index}`"
       ></CardTask>
       <!-- Number of tomorrow tasks -->
       <div class="alert alert-keven" role="alert">
@@ -44,9 +44,9 @@
       </div>
       <!-- Tomorrow tasks -->
       <CardTask
-        v-for="task in tomorrowTasks"
+        v-for="(task, index) in tomorrowTasks"
         :task="task"
-        :key="task['.key']"
+        :key="`tomorrowTasks-${index}`"
       ></CardTask>
       <!-- Number of next days tasks -->
       <div class="alert alert-success" role="alert">
@@ -59,9 +59,9 @@
       </div>
       <!-- Next days tasks -->
       <CardTask
-        v-for="task in lateTasks"
+        v-for="(task, index) in lateTasks"
         :task="task"
-        :key="task['.key']"
+        :key="`lateTasks-${index}`"
       ></CardTask>
     </div>
     <!-- Third col: Doing list -->
@@ -77,6 +77,11 @@
         </h1>
       </header>
       <!-- Doing tasks -->
+      <CardTask
+        v-for="(task, index) in doingTasks"
+        :task="task"
+        :key="`doingTasks-${index}`"
+      ></CardTask>
     </div>
     <!-- Fouth col: Done list -->
     <div class="col-lg-3 col-md-6 col-sm-12 p-1">
@@ -91,6 +96,11 @@
         </h1>
       </header>
       <!-- Done tasks -->
+      <CardTask
+        v-for="(task, index) in doneTasks"
+        :task="task"
+        :key="`doneTasks-${index}`"
+      ></CardTask>
     </div>
   </div>
 </template>
@@ -116,17 +126,17 @@ export default {
       colaborators: state => state.colaborators.all
     }),
     // computed by state
+    todoTasks() {
+      return this.tasks.filter(({ status }) => status === "todo");
+    },
+    doingTasks() {
+      return this.tasks.filter(({ status }) => status === "doing");
+    },
     doneTasks() {
       // Recently completed
       return this.tasks
         .filter(({ status }) => status === "done")
         .sort((t1, t2) => t1.doneTime < t2.doneTime); // desc
-    },
-    doingTasks() {
-      return this.tasks.filter(({ status }) => status === "doing");
-    },
-    todoTasks() {
-      return this.tasks.filter(({ status }) => status === "todo");
     },
     // computed by time
     overdueTasks() {
