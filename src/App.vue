@@ -63,6 +63,12 @@ export default {
       document.title = to.meta.title || "Painel de controle";
       this.title = to.meta.title;
     }
+  },
+
+  created() {
+    this.$store.dispatch("clients/getAll");
+    this.$store.dispatch("colaborators/getAll");
+    this.$store.dispatch("tasks/getAll");
   }
 };
 </script>

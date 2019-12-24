@@ -25,9 +25,10 @@
                 <label>id</label>
                 <input
                   class="form-control"
-                  v-model="client.clientId"
+                  v-model="currentId"
                   type="number"
                   placeholder="ex: 169"
+                  disabled="true"
                 />
               </div>
               <!-- Form group client name -->
@@ -107,14 +108,12 @@
 </template>
 
 <script>
-import { database } from "../database";
+import { mapState } from 'vuex';
 
-/* eslint-disable no-console */
 export default {
   data() {
     return {
       client: {
-        clientId: "",
         name: "",
         scheme: "initial",
         status: "active"
@@ -124,13 +123,13 @@ export default {
         initial: "INICIAL",
         intermediary: "INTERMEDIÁRIO",
         complete: "COMPLETO",
-        inative: "inativo"
+        inactive: "inativo"
       },
       SCHEME_CLS: {
         initial: "table-primary",
         intermediary: "table-success",
         complete: "table-info",
-        inative: "table-warning"
+        inactive: "table-warning"
       },
       SCHEMES: ["initial", "intermediary", "complete", "inactive"]
     };
@@ -138,12 +137,13 @@ export default {
 
   methods: {
     create() {
-      database
-        .ref("clients")
-        .child(this.client.clientId)
-        .set(this.client);
+      if (this.currentId) {
+        this.$store.dispatch("clients/add", {
+          ...this.client,
+          clientId: this.currentId
+        });
+      }
       this.clear();
-      console.log("Created");
     },
 
     edit(client) {
@@ -160,11 +160,10 @@ export default {
     }
   },
 
-  computed: {
-    clients() {
-      return (this.allClients || []).filter(e => !!e);
-    }
-  }
+  computed: mapState({
+    clients: state => state.clients.all,
+    currentId: state => state.clients.currentId
+  })
 };
 </script>
 
