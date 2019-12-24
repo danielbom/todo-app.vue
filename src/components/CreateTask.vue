@@ -23,7 +23,7 @@
       <!-- Form group task client -->
       <div class="form-group m-o">
         <label class="mb-0">Para quem?</label>
-        <select class="form-control" m-model="task.client">
+        <select class="form-control" v-model="task.client">
           <option
             v-for="client in clients"
             :value="client"
@@ -38,9 +38,9 @@
         <label class="mb-0">Quem vai fazer?</label>
         <select class="form-control" v-model="task.colaborator">
           <option
-            v-for="colaborator in colaborators"
+            v-for="(colaborator, index) in colaborators"
             :value="colaborator"
-            :key="colaborator['.key']"
+            :key="`colaborator-${index}`"
           >
             {{ colaborator.name }}
           </option>
@@ -84,16 +84,9 @@
 </template>
 
 <script>
-export default {
-  props: {
-    clients: {
-      required: true
-    },
-    colaborators: {
-      required: true
-    }
-  },
+import { mapState } from "vuex";
 
+export default {
   data() {
     return {
       showCreator: false,
@@ -104,14 +97,14 @@ export default {
         client: {},
         colaborator: {},
         importance: 1,
-        time: new Date()
+        time: ""
       }
-    }
+    };
   },
 
   methods: {
     create() {
-      this.$store.dispatch("tasks/addTask", this.task)
+      this.$store.dispatch("tasks/addTask", this.task);
       this.clear();
     },
 
@@ -124,9 +117,14 @@ export default {
         importance: 1,
         createdAt: new Date(),
         time: new Date()
-      }
+      };
     }
-  }
+  },
+
+  computed: mapState({
+    clients: state => state.clients.all,
+    colaborators: state => state.colaborators.all
+  })
 };
 </script>
 
