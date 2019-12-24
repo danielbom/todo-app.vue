@@ -30,6 +30,8 @@ const actions = {
   },
 
   add({ commit }, colaborator) {
+    colaborator = { ...colaborator, createdAt: Date.now() }; // timestamped
+
     database
       .ref(BASE_REF)
       .child(colaborator.colaboratorId)

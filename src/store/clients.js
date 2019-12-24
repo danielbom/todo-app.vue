@@ -30,6 +30,8 @@ const actions = {
   },
 
   add({ commit }, client) {
+    client = { ...client, createdAt: Date.now() }; // timestamped
+
     database
       .ref(BASE_REF)
       .child(client.clientId)

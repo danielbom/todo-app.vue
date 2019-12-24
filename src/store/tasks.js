@@ -24,6 +24,8 @@ const actions = {
   },
 
   add({ commit }, task) {
+    task = { ...task, createdAt: Date.now() }; // timestamped
+
     database
       .ref(BASE_REF)
       .child(task.taskId)
