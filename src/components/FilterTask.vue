@@ -6,7 +6,7 @@
     </div>
     <!-- Card filters body -->
     <div class="card-body" v-show="showFilter">
-      <form>
+      <form v-on:submit="e => e.preventDefault()">
         <!-- Card filters group task -->
         <div class="form-group">
           <label>Tarefa</label>
@@ -15,12 +15,17 @@
             class="form-control"
             v-model="filters.title"
             placeholder="Título"
+            v-on:change="applyFilter()"
           />
         </div>
         <!-- Card filters group task -->
         <div class="form-group">
           <label>Colaborador</label>
-          <select class="form-control" v-model="filters.colaborator">
+          <select
+            class="form-control"
+            v-model="filters.colaborator"
+            v-on:change="applyFilter()"
+          >
             <option value="">Todos</option>
             <option
               v-for="c in colaborators"
@@ -34,7 +39,11 @@
         <!-- Card filters group client -->
         <div class="form-group">
           <label>Cliente</label>
-          <select class="form-control" v-model="filters.client">
+          <select
+            class="form-control"
+            v-model="filters.client"
+            v-on:change="applyFilter()"
+          >
             <option value="">Todos</option>
             <option
               v-for="c in clients"
@@ -52,6 +61,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -68,6 +79,34 @@ export default {
             task.title.toLowerCase().includes(this.filters.title.toLowerCase())
         }
       }
+    };
+  },
+
+  computed: mapState({
+    allTasks: state => state.tasks.all,
+    colaborators: state => state.colaborators.all,
+    clients: state => state.clients.all
+  }),
+
+  methods: {
+    applyFilter() {
+      let tasks = [...this.allTasks];
+
+      if (this.filters.title.length > 0) {
+        tasks = tasks.filter(this.filters.by.title);
+      }
+      if (this.filters.client.length > 0) {
+        tasks = tasks.filter(this.filters.by.client);
+      }
+      if (this.filters.colaborator.length > 0) {
+        tasks = tasks.filter(this.filters.by.colaborator);
+      }
+
+      tasks
+        .sort((t1, t2) => t1.time > t2.time) // asc
+        .sort((t1, t2) => t1.importance < t2.importance); // desc
+
+      this.$store.dispatch("tasks/setFiltered", tasks);
     }
   }
 };
