@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-header" v-on:click="showCreator = !showCreator">
+    <div class="card-header btn" v-on:click="showCreator = !showCreator">
       CRIAR TAREFA
     </div>
     <div class="card-body" v-show="showCreator">
@@ -51,7 +51,7 @@
         <label class="mb-0">Qual a prioridade?</label>
         <select class="form-control" v-model="task.importance">
           <option selected value="1">Baixa prioridade</option>
-          <option value="2">Neutra</option>
+          <option value="2">Normal</option>
           <option value="3">Alta prioridade</option>
           <option value="4">Crítica</option>
         </select>
@@ -70,6 +70,7 @@
         CRIAR TAREFA
       </button>
       <!-- Form group task edit button -->
+      <!--
       <button
         class="btn btn-primary btn-block"
         type="button"
@@ -77,6 +78,7 @@
       >
         EDITAR TAREFA
       </button>
+      -->
     </div>
   </div>
 </template>
@@ -102,6 +104,25 @@ export default {
         client: {},
         colaborator: {},
         importance: 1,
+        time: new Date()
+      }
+    }
+  },
+
+  methods: {
+    create() {
+      this.$store.dispatch("tasks/addTask", this.task)
+      this.clear();
+    },
+
+    clear() {
+      this.task = {
+        title: "",
+        detail: "",
+        client: {},
+        colaborator: {},
+        importance: 1,
+        createdAt: new Date(),
         time: new Date()
       }
     }
