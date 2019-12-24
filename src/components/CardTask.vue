@@ -9,11 +9,11 @@
       <!-- Colaborator -->
       <span
         class="badge text-uppercase"
-        :class="{ 'badge-danger': task.colaboratorId < 6 }"
+        :class="{ 'badge-danger': task.colaborator.id < 6 }"
       >
         <i class="far fa-user"></i>
         <strong class="pl-2">
-          {{ task.colaboratorName }}
+          {{ task.colaborator.name }}
         </strong>
       </span>
       <!-- Time -->
@@ -27,7 +27,7 @@
     <!-- Body card -->
     <div class="card-body" v-on:click="showTask = !showTask">
       <!-- Title -->
-      <p class="font-weight-bold">{{ task.title }} - {{ task.clientName }}</p>
+      <p class="font-weight-bold">{{ task.title }} - {{ task.client.name }}</p>
       <!-- Detail -->
       <p
         class="card-text"
@@ -64,8 +64,6 @@
 </template>
 
 <script>
-import EventBus from "@/event-bus";
-import { database } from "../database";
 import moment from "moment";
 moment.locale("pt-br");
 
@@ -97,22 +95,15 @@ export default {
       return moment(date).format("D [de] MMM");
     },
     // Update task
-    ref() {
-      return database.ref("task").child(this.task[".key"]);
-    },
     updateStatus(status) {
-      this.ref().update({ status, doneTime: new Date() });
+      status;
     },
     remove() {
       if (confirm("Deletar tarefas?")) {
-        this.ref().remove();
         alert("Tarefa deletada!");
       }
     },
     edit() {
-      EventBus.$emit("edit-task", {
-        task: this.task
-      });
     }
   }
 };
