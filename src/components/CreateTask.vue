@@ -50,10 +50,10 @@
       <div class="form-group">
         <label class="mb-0">Qual a prioridade?</label>
         <select class="form-control" v-model="task.importance">
-          <option selected value="1">Baixa prioridade</option>
-          <option value="2">Normal</option>
-          <option value="3">Alta prioridade</option>
-          <option value="4">Crítica</option>
+          <option selected value="low">Baixa prioridade</option>
+          <option value="normal">Normal</option>
+          <option value="high">Alta prioridade</option>
+          <option value="critical">Crítica</option>
         </select>
       </div>
       <!-- Form group task time -->
@@ -104,7 +104,12 @@ export default {
 
   methods: {
     create() {
-      this.$store.dispatch("tasks/addTask", this.task);
+      this.$store.dispatch("tasks/add", {
+        ...this.task,
+        id: this.taskId,
+        time: new Date(this.task.time).getTime(),
+        status: "todo"
+      });
       this.clear();
     },
 
@@ -123,7 +128,8 @@ export default {
 
   computed: mapState({
     clients: state => state.clients.all,
-    colaborators: state => state.colaborators.all
+    colaborators: state => state.colaborators.all,
+    taskId: state => state.tasks.currentId
   })
 };
 </script>
