@@ -27,17 +27,14 @@ const actions = {
       .ref(BASE_REF)
       .once("value")
       .then(snapshot => {
-        let clients = (snapshot.val() || []).filter(e => !!e);
+        let data = (snapshot.val() || []).filter(e => !!e);
 
-        if (clients.length > 0) {
-          let maxId = clients.reduce(
-            (id, c) => (c.clientId > id ? c.clientId : id),
-            0
-          );
+        if (data.length > 0) {
+          let maxId = data.reduce((id, c) => (c.id > id ? c.id : id), 0);
           commit("setCurrentId", Number(maxId) + 1);
         }
 
-        commit("setClients", clients);
+        commit("setClients", data);
       });
   },
 

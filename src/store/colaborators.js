@@ -26,17 +26,14 @@ const actions = {
       .ref(BASE_REF)
       .once("value")
       .then(snapshot => {
-        let colaborators = (snapshot.val() || []).filter(e => !!e);
+        let data = (snapshot.val() || []).filter(e => !!e);
 
-        if (colaborators.length > 0) {
-          let maxId = colaborators.reduce(
-            (id, c) => (c.clientId > id ? c.clientId : id),
-            0
-          );
+        if (data.length > 0) {
+          let maxId = data.reduce((id, e) => (e.id > id ? e.id : id), 0);
           commit("setCurrentId", Number(maxId) + 1);
         }
 
-        commit("setColaborators", colaborators);
+        commit("setColaborators", data);
       });
   },
 

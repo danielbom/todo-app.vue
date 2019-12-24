@@ -35,10 +35,14 @@ const actions = {
       .ref(BASE_REF)
       .once("value")
       .then(snapshot => {
-        const tasks = (snapshot.val() || []).filter(e => !!e);
+        const data = (snapshot.val() || []).filter(e => !!e);
 
-        commit("setTasks", tasks);
-        commit("setFiltered", tasks);
+        if (data.length > 0) {
+          let maxId = data.reduce((id, e) => (e.id > id ? e.id : id), 0);
+          commit("setCurrentId", Number(maxId) + 1);
+        }
+
+        commit("setTasks", data);
       });
   },
 
@@ -51,7 +55,7 @@ const actions = {
       .set(task)
       .then(() => {
         commit("addTask", task);
-        commit("setCurrentId", task.taskId + 1);
+        commit("setCurrentId", task.id + 1);
       });
   },
 
@@ -61,12 +65,9 @@ const actions = {
 };
 
 const mutations = {
-  setFiltered(state, tasks) {
-    state.filtered = tasks;
-  },
-
   setTasks(state, tasks) {
     state.all = tasks;
+    state.filtered = tasks;
   },
 
   addTask(state, task) {
