@@ -137,9 +137,15 @@ const fakedb = {
   },
   update(values) {
     console.log("Update", { values });
+    return this;
   },
   remove() {
     console.log("Remove");
+    return this;
+  },
+  set() {
+    console.log("Set");
+    return this;
   }
 };
 

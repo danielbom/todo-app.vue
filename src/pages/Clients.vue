@@ -137,10 +137,10 @@ export default {
 
   methods: {
     create() {
-      if (this.currentId) {
+      if (this.clientId) {
         this.$store.dispatch("clients/add", {
           ...this.client,
-          clientId: this.currentId
+          id: this.clientId
         });
       }
       this.clear();
@@ -162,7 +162,7 @@ export default {
 
   computed: mapState({
     clients: state => state.clients.all,
-    currentId: state => state.clients.currentId
+    clientId: state => state.clients.currentId
   })
 };
 </script>

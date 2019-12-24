@@ -119,45 +119,53 @@ export default {
     FilterTask
   },
 
+  data() {
+    return {
+      todoTasks: [],
+      doingTasks: [],
+      doneTasks: [],
+      // computed by time
+      overdueTasks: [],
+      todayTasks: [],
+      tomorrowTasks: [],
+      lateTasks: []
+    };
+  },
+
   computed: {
     ...mapState({
       tasks: state => state.tasks.filtered,
       clients: state => state.clients.all,
       colaborators: state => state.colaborators.all
-    }),
-    // computed by state
-    todoTasks() {
-      return this.tasks.filter(({ status }) => status === "todo");
-    },
-    doingTasks() {
-      return this.tasks.filter(({ status }) => status === "doing");
-    },
-    doneTasks() {
-      // Recently completed
-      return this.tasks
+    })
+  },
+
+  methods: {
+    computeTodos() {
+      this.todoTasks = this.tasks.filter(({ status }) => status === "todo");
+      this.doingTasks = this.tasks.filter(({ status }) => status === "doing");
+      this.doneTasks = this.tasks
         .filter(({ status }) => status === "done")
         .sort((t1, t2) => t1.doneTime < t2.doneTime); // desc
-    },
-    // computed by time
-    overdueTasks() {
-      let now = new Date();
-      return this.todoTasks.filter(({ time }) => time < now);
-    },
-    todayTasks() {
-      let now = new Date();
-      return this.todoTasks.filter(({ time }) => time === now);
-    },
-    tomorrowTasks() {
+
       let now = new Date();
       let tomorrow = now.setDate(now.getDate() + 1);
+      this.overdueTasks = this.todoTasks.filter(({ time }) => time < now);
+      this.todayTasks = this.todoTasks.filter(({ time }) => time === now);
+      this.tomorrowTasks = this.todoTasks.filter(
+        ({ time }) => time === tomorrow
+      );
+      this.lateTasks = this.todoTasks.filter(({ time }) => time > tomorrow);
+    }
+  },
 
-      return this.todoTasks.filter(({ time }) => time === tomorrow);
-    },
-    lateTasks() {
-      let now = new Date();
-      let tomorrow = now.setDate(now.getDate() + 1);
+  created() {
+    this.computeTodos();
+  },
 
-      return this.todoTasks.filter(({ time }) => time > tomorrow);
+  watch: {
+    tasks() {
+      this.computeTodos();
     }
   }
 };
