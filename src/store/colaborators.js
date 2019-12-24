@@ -1,5 +1,16 @@
 import { database } from "../database";
 
+/**
+ * * Model colaborator
+ *
+ * @attr {Number} id
+ * @attr {String} name
+ * @attr {Enum} status: active | inactive
+ *
+ * * TODO: Think about change status to boolean
+ *
+ */
+
 const BASE_REF = "colaborators";
 
 const state = {

@@ -1,5 +1,17 @@
 import { database } from "../database";
 
+/**
+ * * Model client
+ *
+ * @attr {Number} id
+ * @attr {String} name
+ * @attr {Enum} scheme: initial | intermediary | complete
+ * @attr {Enum} status: active | inactive
+ *
+ * * TODO: Think about change status to boolean
+ *
+ */
+
 const BASE_REF = "clients";
 
 const state = {

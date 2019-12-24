@@ -1,5 +1,24 @@
 import { database } from "../database";
 
+/**
+ * * Model task
+ *
+ * @attr {Number} id
+ * @attr {String} title
+ * @attr {String} detail
+ * @attr {Enum} importance: low | normal | high | critical
+ * @attr {Enum} importance: todo | doing | done
+
+ * @attr {Date as Number} createdAt
+ * @attr {Date as Number} time
+
+ * @attr {ModelClient} client
+ * @attr {ModelColaborator} colaborator
+ *
+ * * TODO: Think about change status to boolean
+ *
+ */
+
 const BASE_REF = "tasks";
 
 const state = {
