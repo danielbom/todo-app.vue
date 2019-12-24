@@ -3,8 +3,8 @@
     <!-- Header card -->
     <div class="card-header d-flex justify-content-between">
       <!-- Importance -->
-      <span class="badge" :class="CLS_IMPORTANCE[task.importance]">
-        <i class="far fa-flag"></i> {{ IMPORTANCE[task.importance] }}
+      <span class="badge" :class="IMPORTANCE[task.importance].cls">
+        <i class="far fa-flag"></i> {{ IMPORTANCE[task.importance].view }}
       </span>
       <!-- Colaborator -->
       <span
@@ -73,14 +73,12 @@ export default {
       status: "",
       showTask: false,
 
-      IMPORTANCE: ["", "BAIXA", "NEUTRA", "ALTA", "CRÍTICA"],
-      CLS_IMPORTANCE: [
-        "",
-        "badge-primary",
-        "badge-success",
-        "badge-warning",
-        "badge-danger"
-      ]
+      IMPORTANCE: {
+        low: { view: "BAIXA", cls: "badge-primary" },
+        normal: { view: "NEUTRA", cls: "badge-success" },
+        high: { view: "ALTA", cls: "badge-warning" },
+        critical: { view: "CRÍTICA", cls: "badge-danger" },
+      }
     };
   },
 
