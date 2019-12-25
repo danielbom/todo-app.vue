@@ -1,6 +1,10 @@
 
+## Links
+  [Github base](https://github.com/devgiordane/todo)
+  [Github Vuex](https://github.com/vuejs/vuex)
+  [Change State](https://dev.to/viniciuskneves/watch-for-vuex-state-changes-2mgj)
 
-## Comandos
+## Commands
   vue create [name]
 
   yarn add bootstrap @fortawesome/fontawesome-free jquery moment popper.js vue-router vuefire
