@@ -1,10 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-// documents
-import clients from "./clients";
-import colaborators from "./colaborators";
-import tasks from "./tasks";
+// models
+import clients from "./models/clients";
+import colaborators from "./models/colaborators";
+import tasks from "./models/tasks";
 
 import createLogger from "./logger.js";
 

@@ -1,22 +1,19 @@
-import { database } from "../database";
+import { database } from "../../database";
 
 /**
- * * Model client
+ * * Model note
  *
  * @attr {Number} id
- * @attr {String} name
- * @attr {Enum} scheme: initial | intermediary | complete
- * @attr {Enum} status: active | inactive
- *
- * * TODO: Think about change status to boolean
+ * @attr {String} content
+ * @attr {Date as Number} createdAt
  *
  */
 
-const BASE_REF = "clients";
+const BASE_REF = "notes";
 
 const state = {
   all: [],
-  currentId: 6
+  currentId: 1
 };
 
 const getters = {};
@@ -34,31 +31,31 @@ const actions = {
           commit("setCurrentId", Number(maxId) + 1);
         }
 
-        commit("setClients", data);
+        commit("setNotes", data);
       });
   },
 
-  add({ commit }, client) {
-    client = { ...client, createdAt: Date.now() }; // timestamped
+  add({ commit }, note) {
+    note = { ...note, createdAt: Date.now() }; // timestamped
 
     database
       .ref(BASE_REF)
-      .child(client.clientId)
-      .set(client)
+      .child(note.id)
+      .set(note)
       .then(() => {
-        commit("addClient", client);
-        commit("setCurrentId", client.clientId + 1);
+        commit("addNote", note);
+        commit("setCurrentId", note.id + 1);
       });
   }
 };
 
 const mutations = {
-  setClients(state, clients) {
-    state.all = clients;
+  setNotes(state, notes) {
+    state.all = notes;
   },
 
-  addClient(state, client) {
-    state.all.push(client);
+  addNote(state, note) {
+    state.all.push(note);
   },
 
   setCurrentId(state, id) {

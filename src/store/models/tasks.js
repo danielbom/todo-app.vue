@@ -1,4 +1,4 @@
-import { database } from "../database";
+import { database } from "../../database";
 
 /**
  * * Model task
@@ -51,7 +51,7 @@ const actions = {
 
     database
       .ref(BASE_REF)
-      .child(task.taskId)
+      .child(task.id)
       .set(task)
       .then(() => {
         commit("addTask", task);

@@ -1,21 +1,22 @@
-import { database } from "../database";
+import { database } from "../../database";
 
 /**
- * * Model colaborator
+ * * Model client
  *
  * @attr {Number} id
  * @attr {String} name
+ * @attr {Enum} scheme: initial | intermediary | complete
  * @attr {Enum} status: active | inactive
  *
  * * TODO: Think about change status to boolean
  *
  */
 
-const BASE_REF = "colaborators";
+const BASE_REF = "clients";
 
 const state = {
   all: [],
-  currentId: 1
+  currentId: 6
 };
 
 const getters = {};
@@ -29,35 +30,35 @@ const actions = {
         let data = (snapshot.val() || []).filter(e => !!e);
 
         if (data.length > 0) {
-          let maxId = data.reduce((id, e) => (e.id > id ? e.id : id), 0);
+          let maxId = data.reduce((id, c) => (c.id > id ? c.id : id), 0);
           commit("setCurrentId", Number(maxId) + 1);
         }
 
-        commit("setColaborators", data);
+        commit("setClients", data);
       });
   },
 
-  add({ commit }, colaborator) {
-    colaborator = { ...colaborator, createdAt: Date.now() }; // timestamped
+  add({ commit }, client) {
+    client = { ...client, createdAt: Date.now() }; // timestamped
 
     database
       .ref(BASE_REF)
-      .child(colaborator.colaboratorId)
-      .set(colaborator)
+      .child(client.id)
+      .set(client)
       .then(() => {
-        commit("addClient", colaborator);
-        commit("setCurrentId", colaborator.colaboratorId + 1);
+        commit("addClient", client);
+        commit("setCurrentId", client.id + 1);
       });
   }
 };
 
 const mutations = {
-  setColaborators(state, colaborators) {
-    state.all = colaborators;
+  setClients(state, clients) {
+    state.all = clients;
   },
 
-  addColaborator(state, colaborator) {
-    state.all.push(colaborator);
+  addClient(state, client) {
+    state.all.push(client);
   },
 
   setCurrentId(state, id) {
