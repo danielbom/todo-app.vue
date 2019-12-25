@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <!-- Card filters header -->
-    <div class="card-header btn" v-on:click="showFilter = !showFilter">
+    <div class="card-header btn btn-link" v-on:click="showFilter = !showFilter">
       APLICAR FILTROS
     </div>
     <!-- Card filters body -->

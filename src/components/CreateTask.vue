@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-header btn" v-on:click="showCreator = !showCreator">
+    <div class="card-header btn btn-link" v-on:click="showCreator = !showCreator">
       CRIAR TAREFA
     </div>
     <div class="card-body" v-show="showCreator">
