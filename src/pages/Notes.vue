@@ -67,7 +67,10 @@ export default {
 
   methods: {
     save() {
-      this.$store.dispatch("notes/add", this.note);
+      this.$store.dispatch("notes/add", {
+        ...this.note,
+        id: this.currentId
+      });
     }
   },
 
