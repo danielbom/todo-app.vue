@@ -25,7 +25,7 @@
                 <label>id</label>
                 <input
                   class="form-control"
-                  v-model="currentId"
+                  v-model="clientId"
                   type="number"
                   placeholder="ex: 169"
                   disabled="true"
