@@ -1,4 +1,8 @@
 
+## Running the application with firebase
+
+To run the application with firebase, it's necessary to create a file src/database/firebaseConfig.js like the src/database/firebaseConfig.default.js file with your firebase's config, and swap comments of databases to use firebase database in the file src/database/index.js.
+
 ## Links
   [Github base](https://github.com/devgiordane/todo)
   [Github Vuex](https://github.com/vuejs/vuex)
