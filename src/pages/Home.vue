@@ -132,13 +132,11 @@ export default {
     };
   },
 
-  computed: {
-    ...mapState({
-      tasks: state => state.tasks.filtered,
-      clients: state => state.clients.all,
-      colaborators: state => state.colaborators.all
-    })
-  },
+  computed: mapState({
+    tasks: state => state.tasks.filtered,
+    clients: state => state.clients.all,
+    colaborators: state => state.colaborators.all
+  }),
 
   methods: {
     computeTodos() {
