@@ -13,7 +13,7 @@
                 rows="4"
                 type="text"
                 class="form-control"
-                v-model="content"
+                v-model="note.content"
                 placeholder="Anotar aqui coisas que não são tarefas, e não podemos esquecer"
               ></textarea>
               <button class="btn btn-info btn-block mt-1" v-on:click="save()">
@@ -54,17 +54,27 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
-      content: "",
-      notes: []
+      note: {
+        content: ""
+      }
     };
   },
 
   methods: {
-    save() {}
-  }
+    save() {
+      this.$store.dispatch("notes/add", this.note);
+    }
+  },
+
+  computed: mapState({
+    notes: state => state.notes.all,
+    noteId: state => state.notes.currentId,
+  }),
 };
 </script>
 

@@ -101,6 +101,18 @@ const DATA = {
       name: "Four",
       status: "inactive"
     }
+  ],
+  notes: [
+    {
+      id: 1,
+      content: "One",
+      createdAt: Date.now()
+    },
+    {
+      id: 2,
+      content: "Two",
+      createdAt: Date.now()
+    }
   ]
 };
 

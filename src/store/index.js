@@ -4,6 +4,7 @@ import Vuex from "vuex";
 // models
 import clients from "./models/clients";
 import colaborators from "./models/colaborators";
+import notes from "./models/notes";
 import tasks from "./models/tasks";
 
 import createLogger from "./logger.js";
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   modules: {
     clients,
     colaborators,
+    notes,
     tasks
   },
   strict: debug,

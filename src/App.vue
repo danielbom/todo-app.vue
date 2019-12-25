@@ -68,6 +68,7 @@ export default {
   created() {
     this.$store.dispatch("clients/getAll");
     this.$store.dispatch("colaborators/getAll");
+    this.$store.dispatch("notes/getAll");
     this.$store.dispatch("tasks/getAll");
   }
 };
